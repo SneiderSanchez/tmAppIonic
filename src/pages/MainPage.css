@@ -1,0 +1,58 @@
+ion-content {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+ion-img {
+  width: 50%;
+  height: 50%;
+  margin: 0 auto;
+}
+
+ion-modal {
+  color: white;
+}
+ion-modal .ion-page {
+  transform: translateY(-50%);
+  top: 50%;
+}
+.modal-content {
+  margin: 0 10%;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.modal-content ion-img {
+  width: 30%;
+  height: 30%;
+  margin: 5% auto;
+}
+
+.modal-content .card-header--submit {
+  text-align: center;
+}
+
+.modal-content .modal__close-button {
+  margin-top: 20px;
+}
+.modal-content ion-item {
+  margin: 10 0;
+}
+.modal-content ion-title {
+  margin-bottom: 10px;
+}
+
+.modal-content ion-card-content {
+  margin: 0 auto;
+}
+
+.form__container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.form__container .modal__close-button {
+  padding: 0 2rem;
+  margin: 1rem 0;
+}

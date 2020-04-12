@@ -17,14 +17,17 @@ import {
   IonCardHeader,
   IonCardSubtitle,
   IonCardContent,
+  IonIcon,
 } from "@ionic/react";
 import "./MainPage.css";
+import { compass } from "ionicons/icons";
 
 const MainPage: FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [station, setStation] = useState([]);
   const [wagon, setWagon] = useState([]);
   const [submited, setSubmited] = useState(false);
+  const [location, setLocation] = useState();
 
   const stationsList = [
     { value: "marly", label: "Marly" },
@@ -32,6 +35,18 @@ const MainPage: FC = () => {
     { value: "toberin", label: "Toberin" },
     { value: "portalNorte", label: "Portal Norte" },
   ];
+
+  const getCurrentLocation = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLocation(position);
+        console.log(position);
+      },
+      (error) => {
+        alert(error.message);
+      }
+    );
+  };
 
   return (
     <IonPage>
@@ -96,7 +111,6 @@ const MainPage: FC = () => {
                       ))}
                     </IonSelect>
                   </IonItem>
-
                   <IonItem>
                     <IonLabel>Vagon</IonLabel>
                     <IonSelect
@@ -110,7 +124,24 @@ const MainPage: FC = () => {
                       <IonSelectOption value="3">Vagon 3</IonSelectOption>
                     </IonSelect>
                   </IonItem>
-
+                  {location ? (
+                    <IonItem>
+                      <IonIcon icon={compass} />
+                      <IonLabel>
+                        Localizacion Guardada ({location.coords.latitude},
+                        {location.coords.longitude})
+                      </IonLabel>
+                    </IonItem>
+                  ) : (
+                    <IonItem
+                      onClick={() => {
+                        getCurrentLocation();
+                      }}
+                    >
+                      <IonIcon icon={compass} />
+                      <IonLabel>Incluir Geolocalizacion</IonLabel>
+                    </IonItem>
+                  )}
                   <IonButton
                     onClick={() => {
                       setStation([]);

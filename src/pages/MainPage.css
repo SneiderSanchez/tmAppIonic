@@ -56,3 +56,25 @@ ion-modal .ion-page {
   padding: 0 2rem;
   margin: 1rem 0;
 }
+
+.input-tm {
+  background-color: rgba( 255, 255, 255, .05);
+  color: white;
+  border: 1px solid rgba( 255, 255, 255, .05);
+  margin: 25px 0;
+  border-radius: 10px;
+  font-size: 19px;
+}
+
+.input-btn {
+  letter-spacing: 2px;
+}
+
+.tm-title {
+  font-size: 30px;
+}
+
+.container {
+  max-width: 90%;
+  margin: 70px auto;
+}

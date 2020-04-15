@@ -44,14 +44,7 @@ const App: React.FC = () => (
           <Route path="/" exact={true} component={MainPage} />
           <Route path="/tab1" exact={true} component={Tab1} />
         </IonRouterOutlet>
-        <IonTabBar slot="bottom">
-          <IonTabButton
-            tab="tab1"
-            href="/tab1"
-          >
-            <IonIcon icon={home} color="tm-color-main" />
-            <IonLabel color="tm-color-main">Home</IonLabel>
-          </IonTabButton>
+        <IonTabBar>
         </IonTabBar>
       </IonTabs>
     </IonReactRouter>

@@ -10,10 +10,11 @@ import {
   IonTabs,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { alertCircle } from "ionicons/icons";
+import { home } from "ionicons/icons";
 import MainPage from "./pages/MainPage";
-/* import Tab2 from "./pages/Tab2";
-import Tab3 from "./pages/Tab3"; */
+
+import Tab1 from "./pages/Tab1";
+// import Tab3 from "./pages/Tab3";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -41,11 +42,15 @@ const App: React.FC = () => (
         <IonRouterOutlet>
           <Route path="/alertas-hoy" component={MainPage} exact={true} />
           <Route path="/" exact={true} component={MainPage} />
+          <Route path="/tab1" exact={true} component={Tab1} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
-          <IonTabButton tab="tab1" href="/">
-            <IonIcon icon={alertCircle} color="tm-color-main" />
-            <IonLabel color="tm-color-main">Alertas de Hoy</IonLabel>
+          <IonTabButton
+            tab="tab1"
+            href="/tab1"
+          >
+            <IonIcon icon={home} color="tm-color-main" />
+            <IonLabel color="tm-color-main">Home</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>

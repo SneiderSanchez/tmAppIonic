@@ -1,0 +1,11 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "tmApp",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {},
+  "server": {
+    "hostname": "http://127.0.0.1:8100"
+  }
+}

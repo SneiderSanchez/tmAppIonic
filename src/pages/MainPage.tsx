@@ -17,14 +17,19 @@ import {
   IonCardHeader,
   IonCardSubtitle,
   IonCardContent,
+  IonIcon,
 } from "@ionic/react";
 import "./MainPage.css";
+import { compass } from "ionicons/icons";
+import ReactMapGL from "react-map-gl";
+import { Geolocation, Geoposition } from "@ionic-native/geolocation";
 
 const MainPage: FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [station, setStation] = useState([]);
   const [wagon, setWagon] = useState([]);
   const [submited, setSubmited] = useState(false);
+  const [location, setLocation] = useState<Geoposition>();
 
   const stationsList = [
     { value: "marly", label: "Marly" },
@@ -32,6 +37,16 @@ const MainPage: FC = () => {
     { value: "toberin", label: "Toberin" },
     { value: "portalNorte", label: "Portal Norte" },
   ];
+
+  const getCurrentLocation = async () => {
+    try {
+      const position = await Geolocation.getCurrentPosition();
+      console.log(position);
+      setLocation(position);
+    } catch (e) {
+      alert(e);
+    }
+  };
 
   return (
     <IonPage>
@@ -96,7 +111,6 @@ const MainPage: FC = () => {
                       ))}
                     </IonSelect>
                   </IonItem>
-
                   <IonItem>
                     <IonLabel>Vagon</IonLabel>
                     <IonSelect
@@ -110,15 +124,44 @@ const MainPage: FC = () => {
                       <IonSelectOption value="3">Vagon 3</IonSelectOption>
                     </IonSelect>
                   </IonItem>
-
+                  {location ? (
+                    <IonItem>
+                      <ReactMapGL
+                        width={300}
+                        height={200}
+                        latitude={location.coords.latitude || 37.757}
+                        longitude={location.coords.longitude || -122.4376}
+                        zoom={13}
+                        mapboxApiAccessToken={
+                          "pk.eyJ1IjoicHJpbWVyZnV0IiwiYSI6ImNrOHoxcHFjaTFlNGMzbGxkN20zZjMxNmkifQ.8UCCP45HlyOn-7rCubsUwg"
+                        }
+                      />
+                    </IonItem>
+                  ) : (
+                    <IonItem
+                      onClick={() => {
+                        getCurrentLocation();
+                      }}
+                    >
+                      <IonIcon icon={compass} />
+                      <IonLabel>Incluir Geolocalizacion</IonLabel>
+                    </IonItem>
+                  )}
                   <IonButton
                     onClick={() => {
+                      console.log("Data send");
+                      location &&
+                        console.log(
+                          `Location: (${location.coords.latitude}, ${location.coords.longitude} ), Vagon:${wagon}, Estacion: ${station} `
+                        );
                       setStation([]);
                       setWagon([]);
+                      setLocation(undefined);
                       setSubmited(true);
                     }}
                     color="tm-color-main"
                     className="modal__close-button"
+                    disabled={!(location && wagon && station)}
                   >
                     Activar Alarma
                   </IonButton>

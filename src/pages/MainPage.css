@@ -58,9 +58,9 @@ ion-modal .ion-page {
 }
 
 .input-tm {
-  background-color: rgba( 255, 255, 255, .05);
+  background-color: rgba(255, 255, 255, 0.05);
   color: white;
-  border: 1px solid rgba( 255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   margin: 25px 0;
   border-radius: 10px;
   font-size: 19px;
@@ -77,4 +77,8 @@ ion-modal .ion-page {
 .container {
   max-width: 90%;
   margin: 70px auto;
+}
+
+ion-title ion-label {
+  margin-left: 45%;
 }

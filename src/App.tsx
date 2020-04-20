@@ -1,16 +1,7 @@
 import React from "react";
-import { Redirect, Route } from "react-router-dom";
-import {
-  IonApp,
-  IonIcon,
-  IonLabel,
-  IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
-} from "@ionic/react";
+import { Route } from "react-router-dom";
+import { IonApp, IonRouterOutlet, IonTabBar, IonTabs } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { home } from "ionicons/icons";
 import MainPage from "./pages/MainPage";
 
 import Tab1 from "./pages/Tab1";
@@ -44,8 +35,7 @@ const App: React.FC = () => (
           <Route path="/" exact={true} component={MainPage} />
           <Route path="/tab1" exact={true} component={Tab1} />
         </IonRouterOutlet>
-        <IonTabBar>
-        </IonTabBar>
+        <IonTabBar></IonTabBar>
       </IonTabs>
     </IonReactRouter>
   </IonApp>

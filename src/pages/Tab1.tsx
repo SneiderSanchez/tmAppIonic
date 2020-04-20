@@ -1,5 +1,5 @@
-import React, { FC, useState } from "react";
-import { camera, trash, close } from "ionicons/icons";
+import React, { FC } from "react";
+import { camera } from "ionicons/icons";
 import {
   IonContent,
   IonHeader,
@@ -13,7 +13,6 @@ import {
   IonRow,
   IonCol,
   IonImg,
-  IonActionSheet,
 } from "@ionic/react";
 import "./Tab1.css";
 import { usePhotoGallery } from "../hooks/usePhotoGallery";

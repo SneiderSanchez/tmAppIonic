@@ -7,6 +7,7 @@ ion-img {
   width: 50%;
   height: 50%;
   margin: 0 auto;
+  filter: brightness(85%);
 }
 
 ion-modal {
@@ -81,4 +82,57 @@ ion-modal .ion-page {
 
 ion-title ion-label {
   margin-left: 45%;
+}
+
+.bottom-navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+
+.google-button {
+  border-width: 0;
+  background: #737373;
+  color: #737373;
+  border-radius: 5px;
+  white-space: nowrap;
+  box-shadow: 1px 1px 0px 1px rgba(0, 0, 0, 0.05);
+  transition-property: background-color, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: ease-in-out;
+  padding: 0;
+  cursor: pointer;
+  padding: 0 10px;
+}
+.google-button:focus,
+.google-button:hover {
+  box-shadow: 1px 4px 5px 1px rgba(0, 0, 0, 0.1);
+}
+.google-button:active {
+  background: #e5e5e5;
+  background-color: #e5e5e5;
+  box-shadow: none;
+  transition-duration: 10ms;
+}
+.google-button {
+  background: white;
+}
+.google-button__icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 24px;
+  height: 24px;
+  box-sizing: border-box;
+  margin-right: 10px;
+}
+.google-button__icon--plus {
+  width: 27px;
+}
+
+.button__list {
+  display: "flex";
+  justify-content: center;
 }

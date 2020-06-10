@@ -14,10 +14,10 @@ import {
   IonCol,
   IonImg,
 } from "@ionic/react";
-import "./Tab1.css";
+import "./Camera.css";
 import { usePhotoGallery } from "../hooks/usePhotoGallery";
 
-const Tab1: FC = () => {
+const Camera: FC = () => {
   const { takePhoto, photos } = usePhotoGallery();
   return (
     <IonPage>
@@ -46,4 +46,4 @@ const Tab1: FC = () => {
   );
 };
 
-export default Tab1;
+export default Camera;

@@ -3,8 +3,9 @@ import { Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, IonTabBar, IonTabs } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import MainPage from "./pages/MainPage";
-
-import Tab1 from "./pages/Tab1";
+/* import TodayAlerts from "./pages/TodayAlerts"; */
+import TodayAlerts from "./pages/TodayAlerts";
+import Camera from "./pages/Camera";
 // import Tab3 from "./pages/Tab3";
 
 /* Core CSS required for Ionic components to work properly */
@@ -31,9 +32,9 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Route path="/alertas-hoy" component={MainPage} exact={true} />
+          <Route path="/alertas-hoy" component={TodayAlerts} exact={true} />
           <Route path="/" exact={true} component={MainPage} />
-          <Route path="/tab1" exact={true} component={Tab1} />
+          <Route path="/camera" exact={true} component={Camera} />
         </IonRouterOutlet>
         <IonTabBar></IonTabBar>
       </IonTabs>

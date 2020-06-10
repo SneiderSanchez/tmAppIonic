@@ -19,13 +19,15 @@ import {
   IonCardContent,
   IonInput,
   IonIcon,
+  IonText,
 } from "@ionic/react";
 import "./MainPage.css";
-import { loginUser } from "../firebaseConfig";
+import { loginUser, loginGoogle, saveData } from "../firebaseConfig";
 import { toast } from "../toast";
-import { compass } from "ionicons/icons";
+import { compass, logOutOutline, alertCircleOutline } from "ionicons/icons";
 import ReactMapGL from "react-map-gl";
 import { Geolocation, Geoposition } from "@ionic-native/geolocation";
+import { LottieSplashScreen } from "@ionic-native/lottie-splash-screen/ngx";
 
 const MainPage: FC = () => {
   const [email, setEmail] = useState("");
@@ -35,7 +37,7 @@ const MainPage: FC = () => {
   );
   const [showModal, setShowModal] = useState(false);
   const [station, setStation] = useState([]);
-  const [wagon, setWagon] = useState([]);
+  const [bus, setBus] = useState([]);
   const [submited, setSubmited] = useState(false);
   const [location, setLocation] = useState<Geoposition>();
 
@@ -69,33 +71,34 @@ const MainPage: FC = () => {
       console.log(res);
     }
   }
+  async function googleLoggin() {
+    await loginGoogle(setIsAuth);
+    localStorage.setItem("logged", "true");
+  }
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>
-            <div>
-              {!isAuth ? "TM Login" : "TM App"}
-              {isAuth ? (
-                <IonLabel
-                  onClick={() => {
-                    localStorage.removeItem("logged");
-                    setEmail("");
-                    setPassword("");
-                    setIsAuth(false);
-                  }}
-                >
-                  Cerrar sesion
-                </IonLabel>
-              ) : (
-                ""
-              )}
-            </div>
-          </IonTitle>
-        </IonToolbar>
-      </IonHeader>
-
+      {isAuth ? (
+        <IonIcon
+          icon={logOutOutline}
+          style={{
+            color: "red",
+            width: "1.5rem",
+            height: "1.5rem",
+            marginRight: "1rem",
+            marginLeft: "auto",
+            marginTop: "1rem",
+          }}
+          onClick={() => {
+            localStorage.removeItem("logged");
+            setEmail("");
+            setPassword("");
+            setIsAuth(false);
+          }}
+        />
+      ) : (
+        ""
+      )}
       <IonContent>
         {isAuth ? (
           <>
@@ -111,8 +114,9 @@ const MainPage: FC = () => {
                         />
                         <IonCardTitle>Alarma Activada</IonCardTitle>
                         <IonCardSubtitle>
-                          En estos momentos el personal de seguridad se dirige a
-                          prestarte ayuda, por favor espera en el lugar
+                          En estos momentos el personal de seguridad esta
+                          informado y pronto se dirigirá a prestarte ayuda, por
+                          favor espera en el lugar
                         </IonCardSubtitle>
                       </IonCardHeader>
                       <IonCardContent>
@@ -155,23 +159,23 @@ const MainPage: FC = () => {
                           </IonSelect>
                         </IonItem>
                         <IonItem>
-                          <IonLabel>Vagon</IonLabel>
+                          <IonLabel>Bus</IonLabel>
                           <IonSelect
-                            value={wagon}
+                            value={bus}
                             placeholder="Select One"
-                            onIonChange={(e) => setWagon(e.detail.value)}
+                            onIonChange={(e) => setBus(e.detail.value)}
                             mode="ios"
                           >
-                            <IonSelectOption value="1">Vagon 1</IonSelectOption>
-                            <IonSelectOption value="2">Vagon 2</IonSelectOption>
-                            <IonSelectOption value="3">Vagon 3</IonSelectOption>
+                            <IonSelectOption value="B12">B12</IonSelectOption>
+                            <IonSelectOption value="H20">H20</IonSelectOption>
+                            <IonSelectOption value="F28">F28</IonSelectOption>
                           </IonSelect>
                         </IonItem>
                         {location ? (
                           <IonItem>
                             <ReactMapGL
                               width={300}
-                              height={200}
+                              height={150}
                               latitude={location.coords.latitude || 37.757}
                               longitude={location.coords.longitude || -122.4376}
                               zoom={13}
@@ -193,18 +197,28 @@ const MainPage: FC = () => {
                         <IonButton
                           onClick={() => {
                             console.log("Data send");
+                            const time = new Date();
+                            saveData(
+                              {
+                                station,
+                                bus,
+                                location: location ? location : "",
+                                time: time.toLocaleTimeString(),
+                              },
+                              "Alert"
+                            );
                             location &&
                               console.log(
-                                `Location: (${location.coords.latitude}, ${location.coords.longitude} ), Vagon:${wagon}, Estacion: ${station} `
+                                `Location: (${location.coords.latitude}, ${location.coords.longitude} ), Vagon:${bus}, Estacion: ${station} `
                               );
                             setStation([]);
-                            setWagon([]);
+                            setBus([]);
                             setLocation(undefined);
                             setSubmited(true);
                           }}
                           color="tm-color-main"
                           className="modal__close-button"
-                          disabled={!(location && wagon && station)}
+                          disabled={!(bus && station)}
                         >
                           Activar Alarma
                         </IonButton>
@@ -213,12 +227,18 @@ const MainPage: FC = () => {
                   )}
                 </IonCard>
               </IonModal>
-              <IonImg
-                src="https://image.flaticon.com/icons/svg/564/564619.svg"
-                onClick={() => setShowModal(true)}
-              />
-              <IonTitle>"Manten presionado para</IonTitle>
-              <IonTitle>activar la alerta"</IonTitle>
+              <div style={{ height: "100%" }}>
+                <IonCardTitle>Bienvenido a Tm App</IonCardTitle>
+
+                <IonImg
+                  src="https://i.ibb.co/pnj4sWV/animation-640-kb9l4w4d.gif"
+                  onClick={() => setShowModal(true)}
+                />
+                <IonCardSubtitle>"Manten presionado para</IonCardSubtitle>
+
+                <IonCardSubtitle>activar la alerta"</IonCardSubtitle>
+                <IonCardSubtitle> 🙋 </IonCardSubtitle>
+              </div>
             </IonContent>
           </>
         ) : (
@@ -243,14 +263,50 @@ const MainPage: FC = () => {
                   type="password"
                   onIonChange={(e) => setPassword(e.detail.value!)}
                 />
-                <IonButton className="input-btn" onClick={login} type="submit">
-                  Login
-                </IonButton>
+                <div className="button__list">
+                  <IonButton
+                    className="input-btn"
+                    onClick={login}
+                    type="submit"
+                  >
+                    Login
+                  </IonButton>
+                  <IonButton
+                    className=" google-button"
+                    onClick={googleLoggin}
+                    type="submit"
+                    fill="clear"
+                  >
+                    <IonImg
+                      src="https://img.icons8.com/color/480/google-logo.png"
+                      alt="google icon"
+                      class="google-button__icon"
+                    />
+                    Google
+                  </IonButton>
+                </div>
               </IonCardContent>
             </IonCard>
           </div>
         )}
       </IonContent>
+      {isAuth ? (
+        <IonItem routerLink="/alertas-hoy">
+          <div className="bottom-navigation">
+            <IonIcon
+              icon={alertCircleOutline}
+              style={{
+                color: "red",
+                width: "1.5rem",
+                height: "1.5rem",
+              }}
+            />
+            <IonCardSubtitle>Alertas de Hoy</IonCardSubtitle>
+          </div>
+        </IonItem>
+      ) : (
+        ""
+      )}
     </IonPage>
   );
 };
